@@ -1,32 +1,21 @@
-#timeモジュールをインポート
-import time
+import RPi.GPIO as GPIO  # RPi.GPIOライブラリをインポート
+import time              # timeライブラリをインポート
 
-#RPi.GPIOモジュールをインポート
-import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)  # ピン番号をGPIO番号で指定することを宣言
 
-# LED1はGPIO17
-LED1=17
+LED_PIN = 17             # LEDが接続されているGPIOの番号。必要に応じて更可能。
 
-# 待ち時間
-wait1=0.5
-wait2=1
+GPIO.setup(LED_PIN, GPIO.OUT)  # LED_PINを出力モードに設定
 
-# BCM(GPIO番号)で指定する設定
-GPIO.setmode(GPIO.BCM)
+try:
+    while True:                 # 無限ループ
+        GPIO.output(LED_PIN, GPIO.HIGH)  # LED_PINに高電圧を出力（LED点灯）
+        time.sleep(1)           # 1秒待つ
 
-# GPIO17を出力モード設定
-GPIO.setup(LED1, GPIO.OUT)
+        GPIO.output(LED_PIN, GPIO.LOW)   # LED_PINに低電圧を出力（LED消灯）
+        time.sleep(1)           # 1秒待つ
 
-while True:
+except KeyboardInterrupt:       # CTRL+Cが押された場合の処理
+    pass                        # 何もしない
 
-  # GPIO17の出力をHIGHにして、LED点灯
-  GPIO.output(LED1, GPIO.HIGH)
-
-  # 待つ
-  time.sleep(wait2)
-
-  # GPIO17の出力をLOWにして、LED点灯
-  GPIO.output(LED1, GPIO.LOW)
-
-  # 待つ
-  time.sleep(wait1)
+GPIO.cleanup()                  # GPIO設定をリセット
