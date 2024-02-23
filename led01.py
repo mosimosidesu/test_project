@@ -1,10 +1,13 @@
 import time
 import gpiozero
 
-# LEDをGPIO18ピンに接続
-led = gpiozero.LED(17)
+# GPIOピン番号を指定
+gpio_pin_number = 17
 
-# while True:
+# LEDを指定したGPIOピンに接続
+led = gpiozero.LED(gpio_pin_number)
+
+while True:
     led.on()  # LEDを点灯
     time.sleep(1)  # 1秒待つ
     led.off()  # LEDを消灯
